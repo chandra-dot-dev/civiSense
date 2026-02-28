@@ -12,11 +12,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
 
-export default function OfficerActionPage({ params }: { params: { id: string } }) {
+export default function OfficerActionPage() {
   const router = useRouter();
+  const params = useParams();
+  const id = params?.id as string;
   const supabase = createClient();
   
   const [complaint, setComplaint] = useState<any>(null);
@@ -27,8 +29,9 @@ export default function OfficerActionPage({ params }: { params: { id: string } }
   const [isUpdating, setIsUpdating] = useState(false);
 
   useEffect(() => {
+    if (!id) return;
     async function loadData() {
-      const { data } = await supabase.from('complaints').select('*').eq('id', params.id).single();
+      const { data } = await supabase.from('complaints').select('*').eq('id', id).single();
       if (data) {
         setComplaint(data);
         setStatus(data.status);
@@ -36,7 +39,7 @@ export default function OfficerActionPage({ params }: { params: { id: string } }
       setLoading(false);
     }
     loadData();
-  }, [params.id, supabase]);
+  }, [id, supabase]);
 
   const handleUpdate = async () => {
     if (!complaint || status === complaint.status) return;
