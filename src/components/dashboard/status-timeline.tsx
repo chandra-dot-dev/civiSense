@@ -31,10 +31,10 @@ export function StatusTimeline({ events }: { events: TimelineEvent[] }) {
               ) : null}
               <div className="relative flex space-x-4">
                 <div>
-                  <span className={`h-8 w-8 rounded-full flex items-center justify-center ring-4 ring-white dark:ring-slate-950
-                    ${event.isCompleted ? 'bg-green-500 text-white' : 
-                      event.isCurrent ? 'bg-blue-600 text-white shadow-md shadow-blue-500/30' : 
-                      'bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400'}`}>
+                  <span className={`h-8 w-8 rounded-sm flex items-center justify-center border
+                    ${event.isCompleted ? 'bg-slate-800 border-slate-900 text-white dark:bg-slate-200 dark:border-white dark:text-slate-900' : 
+                      event.isCurrent ? 'bg-blue-50 border-blue-200 text-blue-700 dark:bg-blue-900/40 dark:border-blue-800/50 dark:text-blue-400' : 
+                      'bg-slate-50 border-slate-200 text-slate-400 dark:bg-slate-900/50 dark:border-slate-800 dark:text-slate-500'}`}>
                     {getIcon(event.status)}
                   </span>
                 </div>

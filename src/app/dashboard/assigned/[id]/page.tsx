@@ -102,21 +102,21 @@ export default function OfficerActionPage() {
         </div>
       </div>
       
-      <div className="grid md:grid-cols-3 gap-8">
+      <div className="grid lg:grid-cols-3 gap-6">
         
         {/* Left Col: Read-only Data */}
-        <div className="md:col-span-2 space-y-6">
-          <div className="bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-6 shadow-sm relative overflow-hidden">
-            <div className={`absolute top-0 right-0 h-full w-2 ${complaint.priority_score > 8 ? 'bg-red-500' : 'bg-blue-500'}`}></div>
+        <div className="lg:col-span-2 space-y-6">
+          <div className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-sm p-6 relative overflow-hidden">
+            <div className={`absolute top-0 left-0 h-full w-1 ${complaint.priority_score > 8 ? 'bg-red-600' : 'bg-blue-600'}`}></div>
             
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-              <h1 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white">
+            <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-6 pb-6 border-b border-slate-200 dark:border-slate-800">
+              <h1 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white uppercase tracking-wide">
                 {complaint.title}
               </h1>
-              <div className="bg-white dark:bg-slate-950 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-800 text-center shadow-sm shrink-0">
-                <span className="block text-[10px] text-slate-500 font-bold uppercase">Priority</span>
-                <span className={`text-lg font-black leading-none ${complaint.priority_score > 8 ? 'text-red-600 dark:text-red-500' : 'text-blue-600 dark:text-blue-500'}`}>
-                  {complaint.priority_score}/15
+              <div className="bg-slate-50 dark:bg-slate-900 px-4 py-2 rounded-sm border border-slate-200 dark:border-slate-800 text-center shrink-0">
+                <span className="block text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-1">Priority Index</span>
+                <span className={`text-xl font-mono font-bold leading-none ${complaint.priority_score > 8 ? 'text-red-700 dark:text-red-400' : 'text-blue-700 dark:text-blue-400'}`}>
+                  {complaint.priority_score}<span className="text-slate-400 text-sm">/15</span>
                 </span>
               </div>
             </div>
@@ -125,19 +125,19 @@ export default function OfficerActionPage() {
               <p>{complaint.description}</p>
             </div>
 
-            <div className="mt-8 grid sm:grid-cols-2 gap-4 border-t border-slate-200 dark:border-slate-800 pt-6">
+            <div className="mt-8 grid sm:grid-cols-2 gap-6 border-t border-slate-200 dark:border-slate-800 pt-6">
               <div className="flex items-start space-x-3 text-sm">
-                <MapPin className="h-4 w-4 text-slate-400 mt-1" />
+                <MapPin className="h-4 w-4 text-slate-500 mt-1" />
                 <div>
-                  <p className="font-semibold text-slate-900 dark:text-white">Location</p>
-                  <p className="text-slate-500 mt-1">{complaint.location_text}</p>
+                  <p className="text-[10px] font-bold text-slate-900 dark:text-white uppercase tracking-widest mb-1 mt-0.5">Reported Coordinates</p>
+                  <p className="text-slate-500 text-xs font-mono">{complaint.location_text}</p>
                 </div>
               </div>
               <div className="flex items-start space-x-3 text-sm">
-                <Calendar className="h-4 w-4 text-slate-400 mt-1" />
+                <Calendar className="h-4 w-4 text-slate-500 mt-1" />
                 <div>
-                  <p className="font-semibold text-slate-900 dark:text-white">Reported On</p>
-                  <p className="text-slate-500 mt-1">{new Date(complaint.created_at).toLocaleString()}</p>
+                  <p className="text-[10px] font-bold text-slate-900 dark:text-white uppercase tracking-widest mb-1 mt-0.5">Ingestion Timestamp</p>
+                  <p className="text-slate-500 text-xs font-mono">{new Date(complaint.created_at).toLocaleString()}</p>
                 </div>
               </div>
             </div>
@@ -145,36 +145,36 @@ export default function OfficerActionPage() {
         </div>
 
         {/* Right Col: Action Form */}
-        <div className="md:col-span-1 space-y-6">
-          <div className="bg-white dark:bg-slate-900 border border-blue-200 dark:border-blue-900 min-h-[400px] rounded-xl p-6 shadow-md shadow-blue-500/5">
-            <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-6 flex items-center">
-              <CheckSquare className="h-5 w-5 mr-2 text-blue-500" />
-              Update Status
+        <div className="lg:col-span-1 space-y-6">
+          <div className="bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 min-h-[400px] rounded-sm p-6">
+            <h3 className="text-sm font-bold text-slate-900 dark:text-white mb-6 uppercase tracking-widest flex items-center border-b border-slate-200 dark:border-slate-800 pb-3">
+              <CheckSquare className="h-4 w-4 mr-2 text-slate-500" />
+              State Mutation
             </h3>
             
-            <div className="space-y-6">
-              <div className="space-y-3">
-                <label className="text-sm font-semibold text-slate-900 dark:text-white block">Current Status</label>
+            <div className="space-y-6 mt-6">
+              <div className="space-y-2">
+                <label className="text-[10px] font-bold uppercase tracking-widest text-slate-900 dark:text-white block">Current State</label>
                 <Select value={status} onValueChange={setStatus}>
-                  <SelectTrigger className="w-full font-medium">
+                  <SelectTrigger className="w-full font-mono text-xs uppercase tracking-wider rounded-sm border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900">
                     <SelectValue placeholder="Select status" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="rounded-sm font-mono text-xs uppercase tracking-wider">
                     <SelectItem value="SUBMITTED">Submitted</SelectItem>
                     <SelectItem value="UNDER_REVIEW">Under Review</SelectItem>
-                    <SelectItem value="ASSIGNED">Assigned (Not Started)</SelectItem>
+                    <SelectItem value="ASSIGNED">Assigned</SelectItem>
                     <SelectItem value="IN_PROGRESS">In Progress</SelectItem>
-                    <SelectItem value="RESOLVED">Resolved / Fixed</SelectItem>
-                    <SelectItem value="CLOSED">Closed (Duplicate/Invalid)</SelectItem>
+                    <SelectItem value="RESOLVED">Resolved / Verified</SelectItem>
+                    <SelectItem value="CLOSED">Closed / Invalid</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
-              <div className="space-y-3">
-                <label className="text-sm font-semibold text-slate-900 dark:text-white block">Internal Note <span className="text-slate-400 font-normal">(Visible in audit logs)</span></label>
+              <div className="space-y-2">
+                <label className="text-[10px] font-bold uppercase tracking-widest text-slate-900 dark:text-white block">Audit Trail Note <span className="text-slate-500 font-mono tracking-normal ml-1">(REQUIRED)</span></label>
                 <Textarea 
-                  placeholder="E.g., Dispatched crew, awaiting materials, or completed fix." 
-                  className="min-h-[120px] resize-none"
+                  placeholder="Insert operational justification." 
+                  className="min-h-[120px] resize-none rounded-sm border-slate-300 dark:border-slate-700 font-mono text-xs bg-white dark:bg-slate-900 focus-visible:ring-1 focus-visible:ring-slate-500"
                   value={note}
                   onChange={(e) => setNote(e.target.value)}
                 />
@@ -182,10 +182,10 @@ export default function OfficerActionPage() {
 
               <Button 
                 onClick={handleUpdate} 
-                className="w-full bg-blue-600 hover:bg-blue-700 font-semibold"
+                className="w-full bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-200 dark:text-slate-900 text-white rounded-sm h-10 font-bold uppercase tracking-widest text-xs"
                 disabled={isUpdating || status === complaint.status}
               >
-                {isUpdating ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Saving...</> : "Save Update"}
+                {isUpdating ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Committing...</> : "Execute Update"}
               </Button>
             </div>
           </div>

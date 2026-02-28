@@ -56,14 +56,14 @@ export default function SignUpPage() {
   if (success) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950 p-4">
-        <div className="w-full max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm p-8 text-center">
-          <ShieldCheck className="h-12 w-12 text-green-500 mx-auto mb-4" />
-          <h2 className="text-2xl font-bold mb-2">Check your email</h2>
-          <p className="text-slate-600 dark:text-slate-400 mb-6">
-            We sent a verification link to <strong>{email}</strong>.
+        <div className="w-full max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-sm shadow-sm p-8 text-center">
+          <ShieldCheck className="h-10 w-10 text-slate-900 dark:text-white mx-auto mb-4" />
+          <h2 className="text-xl font-bold mb-2 uppercase tracking-wide">Verification Dispatched</h2>
+          <p className="text-xs font-mono text-slate-600 dark:text-slate-400 mb-6 uppercase tracking-widest leading-relaxed">
+            Transmission sent to:<br/><strong className="text-slate-900 dark:text-white mt-1 block">{email}</strong>
           </p>
-          <Button asChild variant="outline" className="w-full">
-            <Link href="/sign-in">Return to Sign In</Link>
+          <Button asChild className="w-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-900 dark:text-white border border-slate-300 dark:border-slate-700 rounded-sm font-bold uppercase tracking-widest text-xs h-10 mt-6">
+            <Link href="/sign-in">Acknowledge & Return</Link>
           </Button>
         </div>
       </div>
@@ -72,81 +72,86 @@ export default function SignUpPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950 p-4">
-      <div className="w-full max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm p-8">
-        <div className="flex justify-center mb-6">
+      <div className="w-full max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-sm shadow-sm p-8">
+        <div className="flex justify-center mb-6 border-b border-slate-100 dark:border-slate-800 pb-6">
           <Link href="/" className="flex items-center space-x-2">
-            <ShieldCheck className="h-8 w-8 text-blue-600" />
-            <span className="font-bold tracking-tight text-2xl text-slate-900 dark:text-white">
-              CivicResolve
+            <ShieldCheck className="h-6 w-6 text-slate-900 dark:text-white" />
+            <span className="font-bold tracking-widest uppercase text-xl text-slate-900 dark:text-white">
+              CivicSense
             </span>
           </Link>
         </div>
         
-        <h1 className="text-2xl font-bold text-center mb-2 text-slate-900 dark:text-white">Create an account</h1>
-        <p className="text-sm text-center text-slate-500 mb-8">Join the platform to report or resolve issues</p>
+        <h1 className="text-xl font-bold text-center mb-2 text-slate-900 dark:text-white uppercase tracking-wider">Clearance Request</h1>
+        <p className="text-xs font-mono text-center text-slate-500 mb-8 uppercase tracking-widest">Register identity in system registry</p>
 
         {error && (
-          <div className="mb-4 p-3 rounded-md bg-red-50 text-red-600 border border-red-200 text-sm">
+          <div className="mb-4 p-3 rounded-sm bg-red-50 text-red-600 border border-red-200 text-xs font-mono uppercase tracking-widest">
             {error}
           </div>
         )}
 
         <form onSubmit={handleSignUp} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="name">Full Name</Label>
+            <Label htmlFor="name" className="text-xs font-bold uppercase tracking-wider">Legal Designation (Name)</Label>
             <Input 
               id="name" 
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="John Doe" 
+              placeholder="JOHN DOE" 
               required 
+              className="rounded-sm font-mono text-sm uppercase"
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email" className="text-xs font-bold uppercase tracking-wider">Contact Vector (Email)</Label>
             <Input 
               id="email" 
               type="email" 
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="name@example.com" 
+              placeholder="OPERATIVE@CIVICSENSE.GOV" 
               required 
+              className="rounded-sm font-mono text-sm uppercase"
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
+             <div className="flex items-center justify-between">
+              <Label htmlFor="password" className="text-xs font-bold uppercase tracking-wider">Security Passkey</Label>
+            </div>
             <Input 
               id="password" 
               type="password" 
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required 
+              className="rounded-sm font-mono text-sm tracking-widest"
             />
           </div>
           
           <div className="space-y-2">
-            <Label>Register As (Demo feature)</Label>
+            <Label className="text-xs font-bold uppercase tracking-wider">Clearance Level (Demo Bypass)</Label>
             <Select value={role} onValueChange={setRole}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select a role" />
+              <SelectTrigger className="rounded-sm font-mono text-xs uppercase tracking-wider">
+                <SelectValue placeholder="Select clearance" />
               </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="CITIZEN">Citizen (Report Issues)</SelectItem>
-                <SelectItem value="OFFICER">Officer (Resolve Issues)</SelectItem>
-                <SelectItem value="ADMIN">Admin (View Analytics)</SelectItem>
+              <SelectContent className="rounded-sm font-mono text-xs uppercase tracking-wider">
+                <SelectItem value="CITIZEN">Standard Civilian (Report)</SelectItem>
+                <SelectItem value="OFFICER">Field Operative (Resolve)</SelectItem>
+                <SelectItem value="ADMIN">Command Center (Analytics)</SelectItem>
               </SelectContent>
             </Select>
           </div>
 
-          <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700" disabled={isLoading}>
-            {isLoading ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Creating account...</> : "Sign Up"}
+          <Button type="submit" className="w-full bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-200 text-white dark:text-slate-900 rounded-sm font-bold uppercase tracking-widest text-xs h-10 mt-6" disabled={isLoading}>
+            {isLoading ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Transmitting...</> : "Submit Request"}
           </Button>
         </form>
 
-        <div className="mt-6 text-center text-sm text-slate-500">
-          Already have an account?{" "}
-          <Link href="/sign-in" className="text-blue-600 hover:underline font-medium">
-            Sign in
+        <div className="mt-8 text-center text-xs text-slate-500 uppercase tracking-widest font-mono">
+          Already possess clearance?{" "}
+          <Link href="/sign-in" className="text-slate-900 dark:text-white hover:underline font-bold mt-2 block">
+            Initialize Session (Sign In)
           </Link>
         </div>
       </div>

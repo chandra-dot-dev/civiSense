@@ -75,51 +75,51 @@ export default function ComplaintDetailPage() {
         </div>
       </div>
       
-      <div className="grid md:grid-cols-3 gap-8">
+      <div className="grid lg:grid-cols-3 gap-6">
         {/* Main Info */}
-        <div className="md:col-span-2 space-y-6">
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 md:p-8 shadow-sm">
-            <div className="flex flex-wrap items-center gap-3 mb-4">
-              <span className="inline-flex items-center text-xs font-semibold uppercase tracking-wider bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400 px-3 py-1 rounded-full">
+        <div className="lg:col-span-2 space-y-6">
+          <div className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-sm p-6 md:p-8">
+            <div className="flex flex-wrap items-center gap-3 mb-6 pb-6 border-b border-slate-200 dark:border-slate-800">
+              <span className="inline-flex items-center text-[10px] font-bold uppercase tracking-widest bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 px-3 py-1 rounded-sm border border-slate-200 dark:border-slate-700">
                 {getCategoryName(complaint.category_id)}
               </span>
-              <span className={`inline-flex items-center text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full
-                 ${complaint.urgency === 'CRITICAL' ? 'bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400' : 'bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-400'}`}>
+              <span className={`inline-flex items-center text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-sm border
+                 ${complaint.urgency === 'CRITICAL' ? 'bg-red-50 border-red-200 text-red-700 dark:bg-red-900/20 dark:border-red-900/50 dark:text-red-400' : 'bg-orange-50 border-orange-200 text-orange-700 dark:bg-orange-900/20 dark:border-orange-900/50 dark:text-orange-400'}`}>
                 {complaint.urgency} PRIORITY
               </span>
             </div>
             
-            <h1 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-6">
+            <h1 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mb-6 uppercase tracking-wide">
               {complaint.title}
             </h1>
             
-            <div className="prose dark:prose-invert max-w-none text-slate-600 dark:text-slate-400">
+            <div className="prose dark:prose-invert max-w-none text-slate-600 dark:text-slate-400 text-sm">
               <p>{complaint.description}</p>
             </div>
 
-            <div className="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800 grid sm:grid-cols-2 gap-4">
+            <div className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800 grid sm:grid-cols-2 gap-6">
               <div className="flex items-start space-x-3 text-sm">
-                <MapPin className="h-5 w-5 text-slate-400 mt-0.5" />
+                <MapPin className="h-4 w-4 text-slate-500 mt-1" />
                 <div>
-                  <p className="font-medium text-slate-900 dark:text-white">Location</p>
-                  <p className="text-slate-500">{complaint.location_text}</p>
+                  <p className="text-[10px] font-bold text-slate-900 dark:text-white uppercase tracking-widest mb-1 mt-0.5">Reported Coordinates</p>
+                  <p className="text-slate-500 text-xs font-mono">{complaint.location_text}</p>
                 </div>
               </div>
               <div className="flex items-start space-x-3 text-sm">
-                <Calendar className="h-5 w-5 text-slate-400 mt-0.5" />
+                <Calendar className="h-4 w-4 text-slate-500 mt-1" />
                 <div>
-                  <p className="font-medium text-slate-900 dark:text-white">Date Submitted</p>
-                  <p className="text-slate-500">{new Date(complaint.created_at).toLocaleString()}</p>
+                  <p className="text-[10px] font-bold text-slate-900 dark:text-white uppercase tracking-widest mb-1 mt-0.5">Ingestion Timestamp</p>
+                  <p className="text-slate-500 text-xs font-mono">{new Date(complaint.created_at).toLocaleString()}</p>
                 </div>
               </div>
             </div>
             
             {/* Image Placeholder */}
-            <div className="mt-8">
-              <h3 className="text-sm font-medium text-slate-900 dark:text-white mb-3">Attached Evidence</h3>
-              <div className="aspect-video w-full max-w-md bg-slate-100 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center">
-                <span className="text-slate-400 text-sm flex items-center px-4 text-center">
-                  <AlertCircle className="h-4 w-4 mr-2" /> No image uploaded
+            <div className="mt-8 border-t border-slate-200 dark:border-slate-800 pt-6">
+              <h3 className="text-xs font-bold text-slate-900 dark:text-white mb-3 uppercase tracking-wider">Attached Telemetry / Evidence</h3>
+              <div className="aspect-video w-full max-w-md bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-sm flex items-center justify-center p-4">
+                <span className="text-slate-500 text-xs font-mono flex items-center text-center uppercase tracking-widest">
+                  <AlertCircle className="h-4 w-4 mr-2" /> NO VISUAL DATA PROVIDED
                 </span>
               </div>
             </div>
@@ -128,12 +128,12 @@ export default function ComplaintDetailPage() {
 
         {/* Sidebar Info */}
         <div className="space-y-6">
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 shadow-sm">
-            <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-6">Status Tracker</h3>
+          <div className="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-sm p-6">
+            <h3 className="text-sm font-bold text-slate-900 dark:text-white mb-6 uppercase tracking-widest border-b border-slate-200 dark:border-slate-800 pb-3">Audit Timeline</h3>
              {history.length > 0 ? (
                  <StatusTimeline events={timelineData} />
              ) : (
-                 <p className="text-sm text-slate-500">No updates yet.</p>
+                 <p className="text-xs font-mono text-slate-500 uppercase tracking-widest">No sequential updates recorded.</p>
              )}
           </div>
         </div>

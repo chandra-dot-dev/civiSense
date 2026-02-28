@@ -151,11 +151,11 @@ export function ComplaintForm() {
   }
 
   return (
-    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 md:p-8 max-w-3xl mx-auto shadow-sm">
-      <div className="mb-8 border-b border-slate-100 dark:border-slate-800 pb-6">
-        <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">File a New Complaint</h2>
-        <p className="text-slate-500 mt-2">
-          Provide as much detail as possible to help authorities resolve the issue faster.
+    <div className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-sm p-6 max-w-3xl mx-auto">
+      <div className="mb-8 border-b border-slate-200 dark:border-slate-800 pb-4">
+        <h2 className="text-xl font-semibold tracking-tight text-slate-900 dark:text-white uppercase">Incident Submission Form</h2>
+        <p className="text-slate-500 mt-2 text-sm leading-relaxed">
+          Log grievance parameters below. Accurate data ingestion ensures faster SLA compliance.
         </p>
       </div>
 
@@ -272,7 +272,7 @@ export function ComplaintForm() {
 
             <div>
               <FormLabel className="flex items-center mb-3"><UploadCloud className="h-4 w-4 mr-2 text-blue-500" /> Photo Evidence</FormLabel>
-              <div className="border-2 border-dashed border-slate-200 dark:border-slate-700 rounded-lg p-6 bg-slate-50 dark:bg-slate-900/50 flex flex-col items-center justify-center text-center h-[100px]">
+              <div className="border-2 border-dashed border-slate-200 dark:border-slate-700 rounded-sm p-6 bg-slate-50 dark:bg-slate-900/50 flex flex-col items-center justify-center text-center h-[100px]">
                 <span className="text-sm text-slate-500 max-w-[200px]">
                   Requires Supabase Storage Bucket setup for demo.
                 </span>
@@ -282,13 +282,13 @@ export function ComplaintForm() {
 
           </div>
 
-          <div className="bg-orange-50 dark:bg-orange-950/30 border border-orange-200 dark:border-orange-900/50 rounded-lg p-4 flex items-start space-x-3 text-sm text-orange-800 dark:text-orange-300">
+          <div className="bg-orange-50 dark:bg-orange-950/30 border border-orange-200 dark:border-orange-900/50 rounded-sm p-4 flex items-start space-x-3 text-sm text-orange-800 dark:text-orange-300">
             <AlertCircle className="h-5 w-5 flex-shrink-0 mt-0.5 text-orange-600 dark:text-orange-400" />
             <p>Submission of false or misleading complaints may result in account suspension. Please ensure all provided information is accurate.</p>
           </div>
 
           {duplicateWarning && (
-            <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-5 mt-6">
+            <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-sm p-5 mt-6">
               <h4 className="font-bold text-yellow-800 dark:text-yellow-500 mb-2 flex items-center">
                 <AlertCircle className="h-4 w-4 mr-2" /> Possible Duplicate Detected
               </h4>

@@ -24,120 +24,108 @@ export default async function AnalyticsPage() {
   })).sort((a,b) => b.count - a.count);
 
   return (
-    <div className="space-y-8">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">City Analytics</h1>
-        <p className="text-slate-500 mt-2">High-level overview of public infrastructure performance.</p>
+    <div className="space-y-6">
+      <div className="border-b border-slate-200 dark:border-slate-800 pb-4">
+        <h1 className="text-2xl font-semibold tracking-tight text-slate-900 dark:text-white uppercase">System Analytics</h1>
+        <p className="text-slate-500 mt-1 text-sm">Aggregate municipal infrastructure telemetry.</p>
       </div>
 
       {/* Top Metrics Row */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 shadow-sm">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-slate-500">Total Reports</CardTitle>
-            <BarChart3 className="h-4 w-4 text-blue-600" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-slate-900 dark:text-white">{total}</div>
-            <p className="text-xs text-slate-500 mt-1">All time complaints submitted</p>
-          </CardContent>
-        </Card>
+      <div className="grid gap-0 md:grid-cols-2 lg:grid-cols-4 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 rounded-sm">
+        <div className="p-6 border-b md:border-b-0 md:border-r border-slate-200 dark:border-slate-800 flex flex-col justify-between">
+          <div className="flex items-center justify-between mb-2">
+            <h3 className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest">Total Reports</h3>
+            <BarChart3 className="h-4 w-4 text-slate-400" />
+          </div>
+          <div className="text-3xl font-mono text-slate-900 dark:text-white font-bold tracking-tighter">{total}</div>
+        </div>
 
-        <Card className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 shadow-sm">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-slate-500">Active Issues</CardTitle>
+        <div className="p-6 border-b md:border-b-0 md:border-r lg:border-r border-slate-200 dark:border-slate-800 flex flex-col justify-between bg-slate-50 dark:bg-slate-900/50">
+          <div className="flex items-center justify-between mb-2">
+            <h3 className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest">Active Issues</h3>
             <Clock className="h-4 w-4 text-orange-600" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-slate-900 dark:text-white">{active}</div>
-            <p className="text-xs text-slate-500 mt-1">Currently in progress or pending</p>
-          </CardContent>
-        </Card>
+          </div>
+          <div className="text-3xl font-mono text-slate-900 dark:text-white font-bold tracking-tighter">{active}</div>
+        </div>
 
-        <Card className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 shadow-sm">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-slate-500">Critical Priority</CardTitle>
+        <div className="p-6 border-b lg:border-b-0 md:border-r border-slate-200 dark:border-slate-800 flex flex-col justify-between">
+          <div className="flex items-center justify-between mb-2">
+            <h3 className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest">Critical Priority</h3>
             <AlertTriangle className="h-4 w-4 text-red-600" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-slate-900 dark:text-white">{critical}</div>
-            <p className="text-xs text-slate-500 mt-1">Require immediate attention</p>
-          </CardContent>
-        </Card>
+          </div>
+          <div className="text-3xl font-mono text-slate-900 dark:text-white font-bold tracking-tighter">{critical}</div>
+        </div>
 
-        <Card className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 shadow-sm">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-slate-500">Resolution Rate</CardTitle>
-            <CheckCircle2 className="h-4 w-4 text-emerald-600" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-slate-900 dark:text-white">{resolutionRate}%</div>
-            <p className="text-xs text-slate-500 mt-1">Issues successfully closed</p>
-          </CardContent>
-        </Card>
+        <div className="p-6 flex flex-col justify-between bg-slate-50 dark:bg-slate-900/50">
+          <div className="flex items-center justify-between mb-2">
+            <h3 className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest">Resolution Rate</h3>
+            <CheckCircle2 className="h-4 w-4 text-slate-400" />
+          </div>
+          <div className="text-3xl font-mono text-slate-900 dark:text-white font-bold tracking-tighter">{resolutionRate}%</div>
+        </div>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-7 pt-4">
         
         {/* Category Breakdown */}
-        <Card className="col-span-4 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 shadow-sm">
-          <CardHeader>
-            <CardTitle className="text-lg font-bold">Reports by Category</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6 pt-4">
+        <div className="col-span-4 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-sm">
+          <div className="p-5 border-b border-slate-200 dark:border-slate-800">
+            <h3 className="text-sm font-semibold tracking-wide uppercase text-slate-900 dark:text-white">Incident Typology Spread</h3>
+          </div>
+          <div className="space-y-6 pt-6 p-5">
             {categoryCounts.map((cat, index) => (
               <div key={index} className="space-y-2">
-                <div className="flex items-center justify-between text-sm">
-                  <span className="font-semibold text-slate-700 dark:text-slate-300 capitalize">
+                <div className="flex items-center justify-between text-xs font-mono uppercase tracking-wider">
+                  <span className="font-semibold text-slate-700 dark:text-slate-300">
                     {cat.name.replace('_', ' ')}
                   </span>
-                  <span className="text-slate-500">{cat.count} reports</span>
+                  <span className="text-slate-500">{cat.count} VERIFIED</span>
                 </div>
-                <div className="h-2 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                <div className="h-2 w-full bg-slate-100 dark:bg-slate-800 rounded-sm overflow-hidden border border-slate-200 dark:border-slate-700/50">
                   <div 
-                    className="h-full bg-blue-500 dark:bg-blue-600 rounded-full" 
+                    className="h-full bg-slate-600 dark:bg-slate-400 rounded-sm" 
                     style={{ width: `${total > 0 ? (cat.count / total) * 100 : 0}%` }}
                   />
                 </div>
               </div>
             ))}
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
         {/* Recent Activity Mini-Feed */}
-        <Card className="col-span-3 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 shadow-sm">
-          <CardHeader>
-            <CardTitle className="text-lg font-bold">System Health</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-8 mt-2">
+        <div className="col-span-3 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-sm">
+          <div className="p-5 border-b border-slate-200 dark:border-slate-800">
+            <h3 className="text-sm font-semibold tracking-wide uppercase text-slate-900 dark:text-white">Node Health</h3>
+          </div>
+          <div className="p-5">
+            <div className="space-y-6">
               <div className="flex items-center">
-                <div className="h-9 w-9 rounded-full bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 flex items-center justify-center mr-4">
-                  <div className="h-2.5 w-2.5 bg-emerald-600 rounded-full animate-pulse"></div>
+                <div className="h-8 w-8 bg-slate-100 dark:bg-slate-900 text-slate-600 flex items-center justify-center mr-4 border border-slate-200 dark:border-slate-800 rounded-sm">
+                  <div className="h-2 w-2 bg-slate-600 rounded-sm animate-pulse"></div>
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-slate-900 dark:text-white">Database Online</p>
-                  <p className="text-xs text-slate-500">Connected to Supabase Region (US-East)</p>
+                  <p className="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-white mb-0.5">Database Link</p>
+                  <p className="text-[10px] uppercase tracking-widest text-slate-500 font-mono">Status: NOMINAL (US-EAST)</p>
                 </div>
               </div>
               <div className="flex items-center">
-                <div className="h-9 w-9 rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-600 flex items-center justify-center mr-4">
-                  <Users className="h-5 w-5" />
+                <div className="h-8 w-8 bg-slate-100 dark:bg-slate-900 text-slate-600 flex items-center justify-center mr-4 border border-slate-200 dark:border-slate-800 rounded-sm">
+                  <Users className="h-4 w-4" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-slate-900 dark:text-white">Citizen Engagement</p>
-                  <p className="text-xs text-slate-500">Traffic normal. No ongoing outages.</p>
+                  <p className="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-white mb-0.5">Citizen Access</p>
+                  <p className="text-[10px] uppercase tracking-widest text-slate-500 font-mono">Status: ACTIVE TRAFFIC</p>
                 </div>
               </div>
             </div>
             
-            <div className="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800">
-               <p className="text-sm text-slate-500 text-center italic">
-                 "Advanced timeline graphs and ML predictive heatmaps are available in the enterprise SLA upgrade."
+            <div className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800">
+               <p className="text-[10px] uppercase tracking-widest text-slate-500 text-center font-mono">
+                 RESTRICTED CLEARANCE LEVEL REQUIRED FOR ADVANCED TELEMETRY
                </p>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
       </div>
     </div>
