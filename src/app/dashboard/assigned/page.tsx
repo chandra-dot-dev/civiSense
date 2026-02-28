@@ -62,7 +62,7 @@ export default async function AssignedComplaintsPage() {
                 <td className="px-6 py-4">
                   <div className="font-semibold text-slate-900 dark:text-white truncate max-w-[250px]">{comp.title}</div>
                   <div className="text-slate-500 mt-1 flex items-center space-x-2">
-                    <span className="font-mono text-xs text-blue-600 dark:text-blue-400 font-semibold bg-blue-50 dark:bg-blue-900/30 px-1.5 py-0.5 rounded border border-blue-100 dark:border-blue-800 max-w-[90px] truncate">TKN-{comp.id.split('-')[0].toUpperCase()}</span>
+                    <span className="font-mono text-xs text-blue-600 dark:text-blue-400 font-semibold bg-blue-50 dark:bg-blue-900/30 px-1.5 py-0.5 rounded border border-blue-100 dark:border-blue-800 max-w-[90px] truncate">TKN-{comp.id.split('-')[0].substring(0, 5).toUpperCase()}</span>
                     <span className="text-[10px]">•</span>
                     <span className="text-xs">{getCategoryName(comp.category_id)}</span>
                   </div>
@@ -105,7 +105,7 @@ export default async function AssignedComplaintsPage() {
         {complaints?.map((comp) => (
           <div key={comp.id} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5">
             <div className="flex justify-between items-start mb-2">
-              <span className="text-xs font-mono font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 px-1.5 py-0.5 rounded border border-blue-100 dark:border-blue-800 max-w-[90px] truncate">TKN-{comp.id.split('-')[0].toUpperCase()}</span>
+              <span className="text-xs font-mono font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 px-1.5 py-0.5 rounded border border-blue-100 dark:border-blue-800 max-w-[90px] truncate">TKN-{comp.id.split('-')[0].substring(0, 5).toUpperCase()}</span>
               <span className={`inline-flex items-center text-[10px] font-bold px-2 py-0.5 rounded uppercase
                 ${comp.priority_score > 8 ? 'bg-red-100 text-red-700' : 'bg-blue-100 text-blue-700'}`}>
                 PRIORITY {comp.priority_score}

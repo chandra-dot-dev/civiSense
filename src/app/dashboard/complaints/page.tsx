@@ -52,7 +52,7 @@ export default async function MyComplaintsPage() {
                 <div className="flex-1 space-y-3">
                   <div className="flex items-center space-x-2">
                     <span className="text-xs font-mono font-medium text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded uppercase max-w-[120px] truncate">
-                      TKN-{complaint.id.split('-')[0].toUpperCase()}
+                      TKN-{complaint.id.split('-')[0].substring(0, 5).toUpperCase()}
                     </span>
                     <span className="text-xs font-medium text-slate-500">•</span>
                     <span className="text-xs font-medium text-slate-500">{new Date(complaint.created_at).toLocaleDateString()}</span>
