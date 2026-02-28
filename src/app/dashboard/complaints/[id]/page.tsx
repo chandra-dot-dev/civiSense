@@ -70,7 +70,7 @@ export default function ComplaintDetailPage() {
           <Link href="/dashboard/complaints" className="hover:text-slate-900 dark:hover:text-slate-200">Complaints</Link>
           <span>/</span>
           <span className="text-xs font-mono font-bold text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900 px-2 py-1 rounded border border-slate-200 dark:border-slate-800 shadow-sm max-w-[120px] truncate">
-            TKN-{complaint.id.split('-')[0].substring(0, 5).toUpperCase()}
+            {complaint.id.split('-')[0].substring(0, 5).toUpperCase()}
           </span>
         </div>
       </div>
