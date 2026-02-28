@@ -98,7 +98,7 @@ export default function OfficerActionPage() {
         <div className="text-sm font-medium text-slate-500 flex items-center space-x-2">
           <Link href="/dashboard/assigned" className="hover:text-slate-900 dark:hover:text-slate-200">Active Queue</Link>
           <span>/</span>
-          <span className="text-slate-900 dark:text-slate-200 max-w-[150px] truncate">{complaint.id}</span>
+          <span className="text-xs font-mono font-bold text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900 px-2 py-1 rounded border border-slate-200 dark:border-slate-800 shadow-sm max-w-[120px] truncate">TKN-{complaint.id.split('-')[0].toUpperCase()}</span>
         </div>
       </div>
       

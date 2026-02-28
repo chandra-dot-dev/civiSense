@@ -1,30 +1,63 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { useParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, MapPin, Calendar, AlertCircle } from "lucide-react";
 import Link from "next/link";
 import { StatusTimeline } from "@/components/dashboard/status-timeline";
-
-// Mock Data
-const complaint = {
-  id: "COMP-9281A",
-  title: "Large pothole on Elm St causing traffic hazard",
-  description: "There is a massive pothole in the right lane of Elm St just before the intersection with 5th Ave. It has been there for 3 days and I saw two cars damage their tires yesterday. Needs immediate attention before someone gets seriously hurt.",
-  category: "Roads & Infrastructure",
-  status: "IN_PROGRESS",
-  urgency: "HIGH",
-  location: "Elm St & 5th Ave, right lane",
-  date: "Oct 24, 2026",
-  assignedTo: "Officer David M.",
-};
-
-const timelineData = [
-  { status: "SUBMITTED", date: "Oct 24, 09:15 AM", description: "Complaint received by the system.", isCompleted: true, isCurrent: false },
-  { status: "UNDER_REVIEW", date: "Oct 24, 10:30 AM", description: "Complaint passed automated AI check and is under manual review.", isCompleted: true, isCurrent: false },
-  { status: "ASSIGNED", date: "Oct 24, 02:45 PM", description: "Assigned to Public Works Department (Officer David M.)", isCompleted: true, isCurrent: false },
-  { status: "IN_PROGRESS", date: "Oct 25, 08:00 AM", description: "Crew dispatched to location to assess materials needed.", isCompleted: false, isCurrent: true },
-  { status: "RESOLVED", date: "Pending", description: "Awaiting final repair and verification.", isCompleted: false, isCurrent: false },
-];
+import { createClient } from "@/utils/supabase/client";
 
 export default function ComplaintDetailPage() {
+  const params = useParams();
+  const id = params?.id as string;
+  const supabase = createClient();
+
+  const [complaint, setComplaint] = useState<any>(null);
+  const [history, setHistory] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!id) return;
+
+    async function fetchData() {
+      // Fetch complaint
+      const { data: compData } = await supabase.from('complaints').select('*').eq('id', id).single();
+      
+      // Fetch history for timeline
+      const { data: histData } = await supabase.from('complaint_history').select('*').eq('complaint_id', id).order('created_at', { ascending: true });
+      
+      if (compData) setComplaint(compData);
+      if (histData) setHistory(histData);
+      
+      setLoading(false);
+    }
+    
+    fetchData();
+  }, [id, supabase]);
+
+  if (loading) return <div className="p-8 text-center text-slate-500">Loading complaint details...</div>;
+  if (!complaint) return <div className="p-8 text-center text-red-500">Complaint not found</div>;
+
+  // Process timeline events based on history
+  const timelineData = history.map((event, idx) => ({
+    status: event.new_status,
+    date: new Date(event.created_at).toLocaleString(),
+    description: event.comments || "Status updated",
+    isCompleted: idx < history.length - 1,
+    isCurrent: idx === history.length - 1,
+  }));
+
+  const getCategoryName = (catId: string) => {
+    switch(catId) {
+      case 'roads': return 'Roads & Infrastructure';
+      case 'water': return 'Water & Sanitation';
+      case 'electricity': return 'Electricity & Trees';
+      case 'safety': return 'Public Safety';
+      default: return 'Others';
+    }
+  };
+
   return (
     <div className="space-y-6 pb-12 mx-auto max-w-5xl">
       <div className="flex items-center space-x-4 mb-8">
@@ -36,7 +69,9 @@ export default function ComplaintDetailPage() {
         <div className="text-sm font-medium text-slate-500 flex items-center space-x-2">
           <Link href="/dashboard/complaints" className="hover:text-slate-900 dark:hover:text-slate-200">Complaints</Link>
           <span>/</span>
-          <span className="text-slate-900 dark:text-slate-200">{complaint.id}</span>
+          <span className="text-xs font-mono font-bold text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900 px-2 py-1 rounded border border-slate-200 dark:border-slate-800 shadow-sm max-w-[120px] truncate">
+            TKN-{complaint.id.split('-')[0].toUpperCase()}
+          </span>
         </div>
       </div>
       
@@ -46,9 +81,10 @@ export default function ComplaintDetailPage() {
           <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 md:p-8 shadow-sm">
             <div className="flex flex-wrap items-center gap-3 mb-4">
               <span className="inline-flex items-center text-xs font-semibold uppercase tracking-wider bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400 px-3 py-1 rounded-full">
-                {complaint.category}
+                {getCategoryName(complaint.category_id)}
               </span>
-              <span className="inline-flex items-center text-xs font-semibold uppercase tracking-wider bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-400 px-3 py-1 rounded-full">
+              <span className={`inline-flex items-center text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full
+                 ${complaint.urgency === 'CRITICAL' ? 'bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400' : 'bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-400'}`}>
                 {complaint.urgency} PRIORITY
               </span>
             </div>
@@ -66,14 +102,14 @@ export default function ComplaintDetailPage() {
                 <MapPin className="h-5 w-5 text-slate-400 mt-0.5" />
                 <div>
                   <p className="font-medium text-slate-900 dark:text-white">Location</p>
-                  <p className="text-slate-500">{complaint.location}</p>
+                  <p className="text-slate-500">{complaint.location_text}</p>
                 </div>
               </div>
               <div className="flex items-start space-x-3 text-sm">
                 <Calendar className="h-5 w-5 text-slate-400 mt-0.5" />
                 <div>
                   <p className="font-medium text-slate-900 dark:text-white">Date Submitted</p>
-                  <p className="text-slate-500">{complaint.date}</p>
+                  <p className="text-slate-500">{new Date(complaint.created_at).toLocaleString()}</p>
                 </div>
               </div>
             </div>
@@ -83,17 +119,9 @@ export default function ComplaintDetailPage() {
               <h3 className="text-sm font-medium text-slate-900 dark:text-white mb-3">Attached Evidence</h3>
               <div className="aspect-video w-full max-w-md bg-slate-100 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center">
                 <span className="text-slate-400 text-sm flex items-center px-4 text-center">
-                  <AlertCircle className="h-4 w-4 mr-2" /> Image uploaded by citizen (Image mock)
+                  <AlertCircle className="h-4 w-4 mr-2" /> No image uploaded
                 </span>
               </div>
-            </div>
-          </div>
-          
-          {/* Discussion Thread stub */}
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 md:p-8 shadow-sm">
-            <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4">Updates & Notes</h3>
-            <div className="p-4 bg-slate-50 dark:bg-slate-950 rounded-lg text-center border border-dashed border-slate-200 dark:border-slate-800">
-              <p className="text-sm text-slate-500">No public internal notes added yet.</p>
             </div>
           </div>
         </div>
@@ -102,20 +130,11 @@ export default function ComplaintDetailPage() {
         <div className="space-y-6">
           <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 shadow-sm">
             <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-6">Status Tracker</h3>
-            <StatusTimeline events={timelineData} />
-          </div>
-
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 shadow-sm">
-            <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-4">Assignment Info</h3>
-            <div className="flex items-center space-x-3">
-              <div className="h-10 w-10 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold">
-                DO
-              </div>
-              <div>
-                <p className="font-medium text-slate-900 dark:text-white">{complaint.assignedTo}</p>
-                <p className="text-xs text-slate-500">Public Works Dept.</p>
-              </div>
-            </div>
+             {history.length > 0 ? (
+                 <StatusTimeline events={timelineData} />
+             ) : (
+                 <p className="text-sm text-slate-500">No updates yet.</p>
+             )}
           </div>
         </div>
 
