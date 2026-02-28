@@ -45,12 +45,6 @@ export function Sidebar({ className, role = "CITIZEN" }: SidebarProps) {
       roles: ["ADMIN"],
     },
     {
-      label: "Users & Roles",
-      icon: Users,
-      href: "/dashboard/users",
-      roles: ["ADMIN"],
-    },
-    {
       label: "Settings",
       icon: Settings,
       href: "/dashboard/settings",
