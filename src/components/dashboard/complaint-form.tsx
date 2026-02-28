@@ -56,6 +56,8 @@ export function ComplaintForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [duplicateWarning, setDuplicateWarning] = useState(false);
+  const [duplicateData, setDuplicateData] = useState<any[]>([]);
   const supabase = createClient();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -79,13 +81,42 @@ export function ComplaintForm() {
       if (!user) throw new Error("Not authenticated");
 
       // 2. Calculate simplified priority score for hackathon
-      // Priority = (Category Weight * 2) + Urgency Weight
       const cat = CATEGORIES.find(c => c.id === values.categoryId);
       const categoryWeight = cat?.weight || 1;
       const urgencyWeight = URGENCY_WEIGHTS[values.urgency] || 2;
       const priorityScore = (categoryWeight * 2) + urgencyWeight;
 
-      // 3. Insert into Supabase
+      // 3. Duplicate Detection Logic (Only run if we haven't warned them yet)
+      if (!duplicateWarning) {
+        const locationWords = values.locationText.split(' ').filter(w => w.length > 4);
+        
+        if (locationWords.length > 0) {
+          const { data: recentComplaints } = await supabase
+            .from('complaints')
+            .select('id, title, location_text, status')
+            .eq('category_id', values.categoryId)
+            .neq('status', 'RESOLVED')
+            .neq('status', 'CLOSED')
+            .order('created_at', { ascending: false })
+            .limit(10);
+            
+          if (recentComplaints && recentComplaints.length > 0) {
+            const matches = recentComplaints.filter(rc => {
+              const rcLoc = (rc.location_text || '').toLowerCase();
+              return locationWords.some(w => rcLoc.includes(w.toLowerCase()));
+            });
+            
+            if (matches.length > 0) {
+              setDuplicateData(matches);
+              setDuplicateWarning(true);
+              setIsSubmitting(false);
+              return; // Halt submission and show warning
+            }
+          }
+        }
+      }
+
+      // 4. Insert into Supabase
       const { data, error } = await supabase.from('complaints').insert({
         user_id: user.id,
         category_id: values.categoryId,
@@ -100,7 +131,7 @@ export function ComplaintForm() {
 
       if (error) throw error;
 
-      // 4. Initial history log
+      // 5. Initial history log
       await supabase.from('complaint_history').insert({
         complaint_id: data.id,
         changed_by: user.id,
@@ -256,10 +287,29 @@ export function ComplaintForm() {
             <p>Submission of false or misleading complaints may result in account suspension. Please ensure all provided information is accurate.</p>
           </div>
 
+          {duplicateWarning && (
+            <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-5 mt-6">
+              <h4 className="font-bold text-yellow-800 dark:text-yellow-500 mb-2 flex items-center">
+                <AlertCircle className="h-4 w-4 mr-2" /> Possible Duplicate Detected
+              </h4>
+              <p className="text-sm text-yellow-700 dark:text-yellow-400 mb-3">
+                We found existing active complaints near this location in the same category. Please review them below:
+              </p>
+              <ul className="list-disc pl-5 text-sm text-yellow-700 dark:text-yellow-400 space-y-1 mb-4">
+                {duplicateData.map((dup, i) => (
+                  <li key={i}><strong>{dup.title}</strong> ({dup.status})</li>
+                ))}
+              </ul>
+              <p className="text-sm font-semibold text-yellow-800 dark:text-yellow-500">
+                Are you sure you still want to submit this new complaint?
+              </p>
+            </div>
+          )}
+
           <div className="flex justify-end pt-4 space-x-4">
             <Button type="button" variant="ghost" onClick={() => router.back()}>Cancel</Button>
-            <Button type="submit" disabled={isSubmitting} className="min-w-[150px] bg-blue-600 hover:bg-blue-700">
-              {isSubmitting ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Submitting...</> : "Submit Complaint"}
+            <Button type="submit" disabled={isSubmitting} className={`min-w-[150px] ${duplicateWarning ? 'bg-yellow-600 hover:bg-yellow-700' : 'bg-blue-600 hover:bg-blue-700'}`}>
+              {isSubmitting ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Submitting...</> : duplicateWarning ? "Submit Anyway" : "Submit Complaint"}
             </Button>
           </div>
         </form>
