@@ -43,10 +43,10 @@ export function HowItWorks() {
                 )}
                 
                 <div className="mb-6 flex justify-between items-start">
-                   <div className="h-12 w-12 rounded-sm bg-slate-100 dark:bg-slate-900 flex items-center justify-center border border-slate-200 dark:border-slate-800">
-                    <step.icon className="h-6 w-6 text-slate-700 dark:text-slate-300" />
+                   <div className="h-12 w-12 rounded-lg bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center border border-blue-200 dark:border-blue-800">
+                    <step.icon className="h-6 w-6 text-blue-600 dark:text-blue-400" />
                   </div>
-                  <div className="text-4xl font-mono text-slate-200 dark:text-slate-800 font-bold tracking-tighter">
+                  <div className="text-5xl text-slate-100 dark:text-slate-800 font-bold tracking-tighter">
                     0{idx + 1}
                   </div>
                 </div>

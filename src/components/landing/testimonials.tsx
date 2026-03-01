@@ -24,27 +24,27 @@ export function Testimonials() {
     <section className="py-24 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
       <div className="container mx-auto px-4 md:px-6 max-w-7xl">
         <div className="mb-12 border-b border-slate-200 dark:border-slate-800 pb-4">
-          <h2 className="text-2xl font-semibold tracking-tight text-slate-900 dark:text-white mb-2">
+          <h2 className="text-2xl font-semibold tracking-tight text-foreground mb-2">
             System Endorsements
           </h2>
-          <p className="text-sm text-slate-500 uppercase tracking-wider">Documented Operational Impact</p>
+          <p className="text-sm text-muted-foreground">Documented Operational Impact</p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-6">
           {testimonials.map((t, idx) => (
-            <div key={idx} className="bg-slate-50 dark:bg-slate-900 p-6 border border-slate-200 dark:border-slate-800 flex flex-col justify-between rounded-sm">
+            <div key={idx} className="bg-card p-6 border border-border flex flex-col justify-between rounded-xl shadow-sm">
               <div className="mb-6">
-                <p className="text-slate-700 dark:text-slate-300 text-sm leading-relaxed border-l-2 border-slate-300 dark:border-slate-700 pl-4 font-mono">
+                <p className="text-muted-foreground text-sm leading-relaxed">
                   "{t.quote}"
                 </p>
               </div>
-              <div className="flex items-center space-x-3 pt-4 border-t border-slate-200 dark:border-slate-800">
-                <div className="h-8 w-12 bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 flex items-center justify-center font-bold text-xs rounded-sm">
+              <div className="flex items-center space-x-3 pt-4 border-t border-border">
+                <div className="h-10 w-10 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 flex items-center justify-center font-bold text-xs rounded-full">
                   {t.initial}
                 </div>
                 <div>
-                  <h4 className="font-semibold text-slate-900 dark:text-white text-sm">{t.author}</h4>
-                  <p className="text-xs text-slate-500 uppercase tracking-wider">{t.role}</p>
+                  <h4 className="font-semibold text-foreground text-sm">{t.author}</h4>
+                  <p className="text-xs text-muted-foreground">{t.role}</p>
                 </div>
               </div>
             </div>

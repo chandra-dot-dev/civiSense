@@ -37,7 +37,7 @@ export function Header({ role }: { role?: string }) {
             <Sidebar role={role} className="border-none" />
           </SheetContent>
         </Sheet>
-        <div className="font-semibold text-sm tracking-wide text-slate-900 dark:text-white uppercase">Civic Operations</div>
+        <div className="font-semibold text-lg tracking-tight text-foreground">Civic Operations</div>
       </div>
       
       <div className="flex-1 md:hidden"></div>
@@ -45,19 +45,19 @@ export function Header({ role }: { role?: string }) {
 
       <div className="flex items-center space-x-3">
         <div className="hidden md:flex items-center mr-2">
-          <span className="text-[10px] font-mono text-slate-500 bg-slate-100 dark:bg-slate-900 px-2 py-1 border border-slate-200 dark:border-slate-800 uppercase tracking-widest rounded-sm">
-            SESSION: {role || 'CITIZEN'}
+          <span className="text-xs font-medium text-slate-500 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 border border-slate-200 dark:border-slate-700 capitalize rounded-md">
+            Role: {role?.toLowerCase() || 'citizen'}
           </span>
         </div>
         <ThemeToggle />
         
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="icon" className="rounded-sm h-9 w-9 border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800">
+            <Button variant="outline" size="icon" className="h-9 w-9 bg-slate-50 dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800">
               <User className="h-4 w-4 text-slate-700 dark:text-slate-300" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-48 rounded-sm">
+          <DropdownMenuContent align="end" className="w-48">
             <DropdownMenuItem onClick={handleSignOut} className="text-red-600 dark:text-red-400 cursor-pointer">
               <LogOut className="mr-2 h-4 w-4" />
               <span>Log out</span>

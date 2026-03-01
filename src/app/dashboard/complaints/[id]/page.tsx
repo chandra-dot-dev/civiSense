@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, MapPin, Calendar, AlertCircle } from "lucide-react";
+import { ArrowLeft, MapPin, Calendar, AlertCircle, ImageIcon } from "lucide-react";
 import Link from "next/link";
 import { StatusTimeline } from "@/components/dashboard/status-timeline";
 import { createClient } from "@/utils/supabase/client";
@@ -36,7 +36,7 @@ export default function ComplaintDetailPage() {
     fetchData();
   }, [id, supabase]);
 
-  if (loading) return <div className="p-8 text-center text-slate-500">Loading complaint details...</div>;
+  if (loading) return <div className="p-8 text-center text-muted-foreground">Loading details...</div>;
   if (!complaint) return <div className="p-8 text-center text-red-500">Complaint not found</div>;
 
   // Process timeline events based on history
@@ -60,66 +60,68 @@ export default function ComplaintDetailPage() {
 
   return (
     <div className="space-y-6 pb-12 mx-auto max-w-5xl">
-      <div className="flex items-center space-x-4 mb-8">
-        <Button asChild variant="ghost" size="icon" className="h-8 w-8 rounded-full border border-slate-200 dark:border-slate-800">
-          <Link href="/dashboard/complaints">
-            <ArrowLeft className="h-4 w-4" />
-          </Link>
-        </Button>
-        <div className="text-sm font-medium text-slate-500 flex items-center space-x-2">
-          <Link href="/dashboard/complaints" className="hover:text-slate-900 dark:hover:text-slate-200">Complaints</Link>
-          <span>/</span>
-          <span className="text-xs font-mono font-bold text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900 px-2 py-1 rounded border border-slate-200 dark:border-slate-800 shadow-sm max-w-[120px] truncate">
-            {complaint.id.split('-')[0].substring(0, 5).toUpperCase()}
-          </span>
+      <div className="flex items-center justify-between mb-8 border-b border-border pb-4">
+        <div className="flex items-center space-x-4">
+          <Button asChild variant="ghost" size="icon" className="h-8 w-8 rounded-full">
+            <Link href="/dashboard/complaints">
+              <ArrowLeft className="h-4 w-4" />
+            </Link>
+          </Button>
+          <div className="text-sm font-medium text-muted-foreground flex items-center space-x-2">
+            <Link href="/dashboard/complaints" className="hover:text-foreground">Incidents</Link>
+            <span>/</span>
+            <span className="text-sm font-semibold text-foreground">
+              #{complaint.id.split('-')[0].substring(0, 5)}
+            </span>
+          </div>
         </div>
       </div>
       
       <div className="grid lg:grid-cols-3 gap-6">
         {/* Main Info */}
         <div className="lg:col-span-2 space-y-6">
-          <div className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-sm p-6 md:p-8">
-            <div className="flex flex-wrap items-center gap-3 mb-6 pb-6 border-b border-slate-200 dark:border-slate-800">
-              <span className="inline-flex items-center text-[10px] font-bold uppercase tracking-widest bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 px-3 py-1 rounded-sm border border-slate-200 dark:border-slate-700">
+          <div className="bg-card border border-border rounded-xl shadow-sm p-6 md:p-8">
+            <div className="flex flex-wrap items-center gap-3 mb-6 pb-6 border-b border-border">
+              <span className="inline-flex items-center text-xs font-medium bg-secondary text-secondary-foreground px-2.5 py-1 rounded-md">
                 {getCategoryName(complaint.category_id)}
               </span>
-              <span className={`inline-flex items-center text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-sm border
+              <span className={`inline-flex items-center text-xs font-medium px-2.5 py-1 rounded-md border
                  ${complaint.urgency === 'CRITICAL' ? 'bg-red-50 border-red-200 text-red-700 dark:bg-red-900/20 dark:border-red-900/50 dark:text-red-400' : 'bg-orange-50 border-orange-200 text-orange-700 dark:bg-orange-900/20 dark:border-orange-900/50 dark:text-orange-400'}`}>
-                {complaint.urgency} PRIORITY
+                {complaint.urgency} Priority
               </span>
             </div>
             
-            <h1 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mb-6 uppercase tracking-wide">
+            <h1 className="text-2xl font-bold tracking-tight text-foreground mb-6">
               {complaint.title}
             </h1>
             
-            <div className="prose dark:prose-invert max-w-none text-slate-600 dark:text-slate-400 text-sm">
+            <div className="prose dark:prose-invert max-w-none text-muted-foreground text-sm leading-relaxed">
               <p>{complaint.description}</p>
             </div>
 
-            <div className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800 grid sm:grid-cols-2 gap-6">
+            <div className="mt-8 pt-6 border-t border-border grid sm:grid-cols-2 gap-6">
               <div className="flex items-start space-x-3 text-sm">
-                <MapPin className="h-4 w-4 text-slate-500 mt-1" />
+                <MapPin className="h-4 w-4 text-muted-foreground mt-0.5" />
                 <div>
-                  <p className="text-[10px] font-bold text-slate-900 dark:text-white uppercase tracking-widest mb-1 mt-0.5">Reported Coordinates</p>
-                  <p className="text-slate-500 text-xs font-mono">{complaint.location_text}</p>
+                  <p className="text-xs font-semibold text-foreground mb-1">Location</p>
+                  <p className="text-muted-foreground text-sm">{complaint.location_text}</p>
                 </div>
               </div>
               <div className="flex items-start space-x-3 text-sm">
-                <Calendar className="h-4 w-4 text-slate-500 mt-1" />
+                <Calendar className="h-4 w-4 text-muted-foreground mt-0.5" />
                 <div>
-                  <p className="text-[10px] font-bold text-slate-900 dark:text-white uppercase tracking-widest mb-1 mt-0.5">Ingestion Timestamp</p>
-                  <p className="text-slate-500 text-xs font-mono">{new Date(complaint.created_at).toLocaleString()}</p>
+                  <p className="text-xs font-semibold text-foreground mb-1">Date Submitted</p>
+                  <p className="text-muted-foreground text-sm">{new Date(complaint.created_at).toLocaleString()}</p>
                 </div>
               </div>
             </div>
             
             {/* Image Placeholder */}
-            <div className="mt-8 border-t border-slate-200 dark:border-slate-800 pt-6">
-              <h3 className="text-xs font-bold text-slate-900 dark:text-white mb-3 uppercase tracking-wider">Attached Telemetry / Evidence</h3>
-              <div className="aspect-video w-full max-w-md bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-sm flex items-center justify-center p-4">
-                <span className="text-slate-500 text-xs font-mono flex items-center text-center uppercase tracking-widest">
-                  <AlertCircle className="h-4 w-4 mr-2" /> NO VISUAL DATA PROVIDED
+            <div className="mt-8 border-t border-border pt-6">
+              <h3 className="text-sm font-semibold text-foreground mb-4 border-l-2 border-primary pl-2">Attached Images</h3>
+              <div className="aspect-video w-full max-w-md bg-muted/50 border border-border rounded-lg flex items-center justify-center p-4">
+                <span className="text-muted-foreground text-sm flex items-center">
+                  <ImageIcon className="h-4 w-4 mr-2" /> No images provided
                 </span>
               </div>
             </div>
@@ -128,12 +130,12 @@ export default function ComplaintDetailPage() {
 
         {/* Sidebar Info */}
         <div className="space-y-6">
-          <div className="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-sm p-6">
-            <h3 className="text-sm font-bold text-slate-900 dark:text-white mb-6 uppercase tracking-widest border-b border-slate-200 dark:border-slate-800 pb-3">Audit Timeline</h3>
+          <div className="bg-card border border-border rounded-xl shadow-sm p-6">
+            <h3 className="text-sm font-semibold tracking-tight text-foreground mb-6 pb-4 border-b border-border border-l-2 border-primary pl-2">Timeline</h3>
              {history.length > 0 ? (
                  <StatusTimeline events={timelineData} />
              ) : (
-                 <p className="text-xs font-mono text-slate-500 uppercase tracking-widest">No sequential updates recorded.</p>
+                 <p className="text-sm text-muted-foreground">No recent updates.</p>
              )}
           </div>
         </div>

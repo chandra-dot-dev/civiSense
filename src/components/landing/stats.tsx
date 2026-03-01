@@ -6,22 +6,22 @@ export function Stats() {
           
           <div className="text-center py-10 px-4 border-b md:border-b-0 md:border-r border-slate-700 dark:border-slate-800">
             <h4 className="text-4xl font-semibold tracking-tight mb-2 text-white">99.8%</h4>
-            <p className="text-slate-400 text-sm uppercase tracking-wider font-medium">Uptime Guarantee</p>
+            <p className="text-slate-400 text-sm font-medium">Uptime Guarantee</p>
           </div>
           
           <div className="text-center py-10 px-4 border-b md:border-b-0 lg:border-r border-slate-700 dark:border-slate-800">
             <h4 className="text-4xl font-semibold tracking-tight mb-2 text-white">12k+</h4>
-            <p className="text-slate-400 text-sm uppercase tracking-wider font-medium">Logged Incidents</p>
+            <p className="text-slate-400 text-sm font-medium">Logged Incidents</p>
           </div>
           
           <div className="text-center py-10 px-4 border-b md:border-b-0 md:border-r border-slate-700 dark:border-slate-800">
             <h4 className="text-4xl font-semibold tracking-tight mb-2 text-white">24h</h4>
-            <p className="text-slate-400 text-sm uppercase tracking-wider font-medium">Avg. SLA Processing</p>
+            <p className="text-slate-400 text-sm font-medium">Avg. SLA Processing</p>
           </div>
           
           <div className="text-center py-10 px-4 border-slate-700 dark:border-slate-800">
             <h4 className="text-4xl font-semibold tracking-tight mb-2 text-white">0</h4>
-            <p className="text-slate-400 text-sm uppercase tracking-wider font-medium">Critical Breaches</p>
+            <p className="text-slate-400 text-sm font-medium">Critical Breaches</p>
           </div>
 
         </div>

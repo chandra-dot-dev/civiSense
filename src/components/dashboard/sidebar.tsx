@@ -59,16 +59,16 @@ export function Sidebar({ className, role = "CITIZEN" }: SidebarProps) {
     <div className={cn("pb-12 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 min-h-screen", className)}>
       <div className="space-y-4 py-4">
         <div className="px-0 py-2">
-          <Link href="/" className="flex items-center space-x-3 px-6 mb-8 mt-2 pb-6 border-b border-slate-200 dark:border-slate-800">
-            <div className="h-6 w-6 bg-slate-800 dark:bg-slate-200 flex items-center justify-center rounded-sm">
-              <Activity className="h-4 w-4 text-white dark:text-slate-900" />
+          <Link href="/" className="flex items-center space-x-3 px-6 mb-8 mt-2 pb-6 border-b border-border">
+            <div className="h-8 w-8 bg-primary flex items-center justify-center rounded-lg shadow-sm">
+              <Activity className="h-4 w-4 text-primary-foreground" />
             </div>
-            <span className="text-sm font-semibold tracking-wide text-slate-900 dark:text-white uppercase">
+            <span className="text-lg font-semibold tracking-tight text-foreground">
               Civic Operations
             </span>
           </Link>
           <div className="space-y-1 px-3">
-            <div className="px-3 mb-2 text-xs font-semibold text-slate-500 uppercase tracking-widest">
+            <div className="px-3 mb-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
               Main Menu
             </div>
             {filteredRoutes.map((route) => {
@@ -78,9 +78,9 @@ export function Sidebar({ className, role = "CITIZEN" }: SidebarProps) {
                   key={route.href}
                   variant={isActive ? "secondary" : "ghost"}
                   className={cn(
-                    "w-full justify-start rounded-sm h-10 px-3",
+                    "w-full justify-start rounded-md h-10 px-3",
                     isActive 
-                      ? "bg-slate-100 dark:bg-slate-900 border-l-2 border-slate-800 dark:border-slate-200 text-slate-900 dark:text-slate-100 font-medium" 
+                      ? "bg-blue-50 dark:bg-blue-950/50 border-l-2 border-blue-600 dark:border-blue-500 text-blue-700 dark:text-blue-400 font-medium" 
                       : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 border-l-2 border-transparent"
                   )}
                   asChild

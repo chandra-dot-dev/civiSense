@@ -38,29 +38,29 @@ export function Features() {
     <section id="features" className="py-24 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
       <div className="container mx-auto px-4 md:px-6 max-w-7xl">
         <div className="max-w-3xl mb-12">
-          <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-slate-900 dark:text-white mb-4">
+          <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-foreground mb-4">
             Core System Capabilities
           </h2>
-          <p className="text-slate-700 dark:text-slate-300">
+          <p className="text-muted-foreground text-lg">
             A secure suite of protocols designed to streamline grievance processing, tracking, and compliance enforcement.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-0 border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {features.map((feature, idx) => (
             <div 
               key={idx} 
-              className={`bg-white dark:bg-slate-950 p-6 sm:p-8 flex flex-col 
-              ${idx % 3 !== 2 ? "border-r border-slate-200 dark:border-slate-800" : ""}
-              ${idx < 3 ? "border-b border-slate-200 dark:border-slate-800" : ""}`}
+              className="bg-card p-6 sm:p-8 flex flex-col rounded-xl border border-border shadow-sm hover:shadow-md transition-shadow"
             >
-              <div className="mb-4 inline-flex items-center text-slate-800 dark:text-slate-200">
-                <feature.icon className="h-5 w-5 mr-3" />
-                <h3 className="font-semibold text-slate-900 dark:text-white">
+              <div className="mb-4 flex items-center">
+                <div className="h-10 w-10 flex items-center justify-center rounded-lg bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400 mr-4">
+                  <feature.icon className="h-5 w-5" />
+                </div>
+                <h3 className="font-semibold text-lg tracking-tight text-foreground">
                   {feature.title}
                 </h3>
               </div>
-              <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed max-w-sm">
+              <p className="text-sm text-muted-foreground leading-relaxed mt-1">
                 {feature.description}
               </p>
             </div>

@@ -26,65 +26,65 @@ export default async function MyComplaintsPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end border-b border-slate-200 dark:border-slate-800 pb-4 gap-4">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end border-b border-border pb-4 gap-4">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-slate-900 dark:text-white uppercase">Incident Logs</h1>
-          <p className="text-slate-500 mt-1 text-sm">Review status and audit history of submitted reports.</p>
+          <h1 className="text-2xl font-semibold tracking-tight text-foreground">Incident Logs</h1>
+          <p className="text-muted-foreground mt-1 text-sm">Review status and history of submitted reports.</p>
         </div>
-        <Button asChild className="bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-200 rounded-sm h-10 px-6 font-semibold">
-          <Link href="/dashboard/complaints/new">Initialize Report</Link>
+        <Button asChild className="h-10 px-6">
+          <Link href="/dashboard/complaints/new">Submit Report</Link>
         </Button>
       </div>
 
-      <div className="border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 mt-8 rounded-sm overflow-hidden">
+      <div className="border border-border bg-card mt-8 rounded-lg shadow-sm overflow-hidden">
         {!complaints || complaints.length === 0 ? (
-          <div className="p-8 text-center border-b border-slate-200 dark:border-slate-800 last:border-0 bg-slate-50 dark:bg-slate-900/50">
-            <p className="text-sm text-slate-500 uppercase tracking-widest">No Incident Logs Found</p>
+          <div className="p-8 text-center bg-muted/30">
+            <p className="text-sm text-muted-foreground font-medium">No reports found.</p>
           </div>
         ) : (
-          <div className="divide-y divide-slate-200 dark:divide-slate-800">
+          <div className="divide-y divide-border">
             {complaints.map((complaint) => (
               <Link 
                 key={complaint.id} 
                 href={`/dashboard/complaints/${complaint.id}`}
-                className="block group hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors"
+                className="block group hover:bg-muted/50 transition-colors"
               >
                 <div className="p-5 flex flex-col sm:flex-row justify-between gap-4">
                   <div className="flex-1 space-y-3">
                     <div className="flex items-center space-x-3">
-                      <span className="text-xs font-mono font-medium text-slate-600 bg-slate-200 dark:bg-slate-800 dark:text-slate-300 px-2 py-0.5 rounded-sm uppercase tracking-wider">
+                      <span className="text-xs font-mono font-medium text-slate-600 bg-slate-100 dark:bg-slate-800 dark:text-slate-300 px-2 py-0.5 rounded-md">
                         #{complaint.id.split('-')[0].substring(0, 5)}
                       </span>
-                      <span className="text-xs font-mono text-slate-500">{new Date(complaint.created_at).toLocaleDateString()}</span>
+                      <span className="text-sm text-muted-foreground">{new Date(complaint.created_at).toLocaleDateString()}</span>
                     </div>
-                    <h3 className="text-sm font-semibold text-slate-900 dark:text-white uppercase tracking-wide group-hover:text-slate-600 dark:group-hover:text-slate-300 transition-colors">
+                    <h3 className="text-base font-semibold text-foreground group-hover:text-primary transition-colors">
                       {complaint.title}
                     </h3>
                     <div className="flex flex-wrap items-center gap-2 mt-2">
-                      <span className="inline-flex items-center text-[10px] uppercase tracking-widest font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-2 py-1 rounded-sm border border-slate-200 dark:border-slate-700">
-                        <FileText className="h-3 w-3 mr-1 opacity-70" /> {getCategoryName(complaint.category_id)}
+                      <span className="inline-flex items-center text-xs font-medium bg-secondary text-secondary-foreground px-2.5 py-0.5 rounded-md">
+                        <FileText className="h-3.5 w-3.5 mr-1" /> {getCategoryName(complaint.category_id)}
                       </span>
-                      <span className={`inline-flex items-center text-[10px] uppercase tracking-widest font-semibold px-2 py-1 rounded-sm border
+                      <span className={`inline-flex items-center text-xs font-medium px-2.5 py-0.5 rounded-md border
                         ${complaint.urgency === 'CRITICAL' ? 'bg-red-50 text-red-700 border-red-200 dark:bg-red-900/20 dark:text-red-400 dark:border-red-900/50' : 
                           complaint.urgency === 'HIGH' ? 'bg-orange-50 text-orange-700 border-orange-200 dark:bg-orange-900/20 dark:text-orange-400 dark:border-orange-900/50' : 
                           'bg-slate-50 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700'}`
                       }>
-                        <AlertCircle className="h-3 w-3 mr-1 opacity-70" /> Lvl {complaint.urgency}
+                        <AlertCircle className="h-3.5 w-3.5 mr-1" /> {complaint.urgency}
                       </span>
                     </div>
                   </div>
                   
-                  <div className="flex flex-col items-start sm:items-end justify-between border-l sm:border-l-0 border-slate-100 dark:border-slate-800 sm:pl-0 pl-4">
-                    <span className={`inline-flex items-center text-[10px] uppercase tracking-widest font-semibold px-3 py-1 rounded-sm border
-                      ${complaint.status === 'RESOLVED' ? 'bg-slate-800 text-white border-slate-900 dark:bg-slate-200 dark:text-slate-900 dark:border-white' : 
+                  <div className="flex flex-col items-start sm:items-end justify-between border-l sm:border-l-0 border-border sm:pl-0 pl-4">
+                    <span className={`inline-flex items-center text-xs font-medium px-2.5 py-0.5 rounded-md border
+                      ${complaint.status === 'RESOLVED' ? 'bg-green-50 text-green-700 border-green-200 dark:bg-green-900/20 dark:text-green-400 dark:border-green-900/50' : 
                         complaint.status === 'IN_PROGRESS' ? 'bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-900/20 dark:text-blue-400 dark:border-blue-800/50' : 
-                        'bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700'}`
+                        'bg-slate-50 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700'}`
                     }>
-                      {complaint.status === 'RESOLVED' ? <CheckCircle2 className="h-3 w-3 mr-1.5" /> : <Clock className="h-3 w-3 mr-1.5" />}
+                      {complaint.status === 'RESOLVED' ? <CheckCircle2 className="h-3.5 w-3.5 mr-1.5" /> : <Clock className="h-3.5 w-3.5 mr-1.5" />}
                       {complaint.status.replace('_', ' ')}
                     </span>
-                    <div className="mt-4 sm:mt-0 text-[10px] font-mono uppercase tracking-widest text-slate-500 group-hover:text-slate-900 dark:group-hover:text-white transition-colors flex items-center">
-                      Examine Data &rarr;
+                    <div className="mt-4 sm:mt-0 text-sm font-medium text-muted-foreground group-hover:text-primary transition-colors flex items-center">
+                      View Details &rarr;
                     </div>
                   </div>
                 </div>
